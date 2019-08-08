@@ -4,7 +4,7 @@ namespace MSI.Keyboard.Backlight.Manager
 {
     public class BacklightConfiguration
     {
-        public bool BacklightTaskbarDependent { get; set; }
+        public BacklightMode Mode { get; set; }
         public TimeSpan RefreshInterval { get; set; }
     }
 }

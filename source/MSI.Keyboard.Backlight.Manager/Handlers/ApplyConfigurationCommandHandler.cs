@@ -25,16 +25,18 @@ namespace MSI.Keyboard.Backlight.Manager.Handlers
             var configuration = await _repository.GetConfiguration();
 
             var registry = new Registry();
+            Schedule schedule = null;
 
             JobManager.StopAndBlock();
 
-            if(configuration.BacklightTaskbarDependent)
+            if(configuration.Mode == BacklightMode.TaskbarColorDependent)
             {
-                registry.Schedule(_backlightTaskbarDependentJob)
-                    .ToRunNow()
+                schedule = registry.Schedule(_backlightTaskbarDependentJob);
+            }
+
+            schedule.ToRunNow()
                     .AndEvery((int)configuration.RefreshInterval.TotalMilliseconds)
                     .Milliseconds();
-            }
 
             JobManager.Initialize(registry);
 

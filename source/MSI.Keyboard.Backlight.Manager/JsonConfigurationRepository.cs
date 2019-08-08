@@ -68,7 +68,7 @@ namespace MSI.Keyboard.Backlight.Manager
         {
             return new BacklightConfiguration()
             {
-                BacklightTaskbarDependent = true
+                Mode = BacklightMode.TaskbarColorDependent
             };
         }
     }

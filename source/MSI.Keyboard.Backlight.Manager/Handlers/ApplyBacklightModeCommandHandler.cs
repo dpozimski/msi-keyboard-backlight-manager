@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace MSI.Keyboard.Backlight.Manager.Handlers
 {
-    public class ApplyBacklightTaskbarDependentCommandHandler : IRequestHandler<ApplyBacklightTaskbarDependentCommand>
+    public class ApplyBacklightModeCommandHandler : IRequestHandler<Commands.ApplyBacklightModeCommandHandler>
     {
         private readonly IConfigurationRepository _backlightConfigurationRepository;
         private readonly IMediator _mediator;
 
-        public ApplyBacklightTaskbarDependentCommandHandler(
+        public ApplyBacklightModeCommandHandler(
             IConfigurationRepository backlightConfigurationRepository,
             IMediator mediator)
         {
@@ -18,11 +18,11 @@ namespace MSI.Keyboard.Backlight.Manager.Handlers
             _mediator = mediator;
         }
 
-        public async Task<Unit> Handle(ApplyBacklightTaskbarDependentCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(Commands.ApplyBacklightModeCommandHandler request, CancellationToken cancellationToken)
         {
             var configuration = await _backlightConfigurationRepository.GetConfiguration();
 
-            configuration.BacklightTaskbarDependent = request.Enabled;
+            configuration.Mode = request.Mode;
 
             await _backlightConfigurationRepository.SaveConfiguration(configuration);
 
