@@ -25,6 +25,7 @@ namespace MSI.Keyboard.Backlight.Manager.UI.IoC
         private void RegisterViewModels(ContainerBuilder builder)
         {
             builder.RegisterType<MainWindowViewModel>().AsSelf();
+            builder.RegisterType<ShellViewModel>().AsSelf();
         }
 
         private void RegisterModules(ContainerBuilder builder)
