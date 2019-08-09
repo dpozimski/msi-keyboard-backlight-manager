@@ -6,5 +6,6 @@ namespace MSI.Keyboard.Backlight.Manager
     {
         public BacklightMode Mode { get; set; }
         public TimeSpan RefreshInterval { get; set; }
+        public int Intensity { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 {
     public enum BacklightMode
     {
-        TaskbarColorDependent
+        TaskbarColorDependent,
+        Rgb
     }
 }

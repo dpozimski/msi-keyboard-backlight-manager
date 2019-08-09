@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MSI.Keyboard.Backlight.Manager.Jobs.BacklightTaskbarDependent
+namespace MSI.Keyboard.Backlight.Manager.Jobs.TaskbarDependentBacklight
 {
     public struct AppBarData
     {

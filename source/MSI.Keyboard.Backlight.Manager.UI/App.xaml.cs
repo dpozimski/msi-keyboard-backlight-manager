@@ -9,7 +9,7 @@ namespace MSI.Keyboard.Backlight.Manager.UI
     /// </summary>
     public partial class App : Application
     {
-        public ILifetimeScope _containerLifeTimeScope { get; private set; }
+        internal static ILifetimeScope ContainerScope { get; private set; }
 
         private readonly AppContainerBuilder _appContainerBuilder;
 
@@ -22,16 +22,16 @@ namespace MSI.Keyboard.Backlight.Manager.UI
         {
             base.OnExit(e);
 
-            _containerLifeTimeScope.Dispose();
+            ContainerScope.Dispose();
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
             var container = _appContainerBuilder.Build();
 
-            _containerLifeTimeScope = container.BeginLifetimeScope();
+            ContainerScope = container.BeginLifetimeScope();
 
-            var window = _containerLifeTimeScope.Resolve<MainWindow>();
+            var window = ContainerScope.Resolve<MainWindow>();
             window.Show();
         }
     }

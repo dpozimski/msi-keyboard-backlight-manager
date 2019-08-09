@@ -1,18 +1,21 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace MSI.Keyboard.Backlight.Manager
+namespace MSI.Keyboard.Backlight.Manager.Settings
 {
-    public class JsonConfigurationRepository : IConfigurationRepository
+    public class JsonBacklightConfigurationRepository : IBacklightConfigurationRepository
     {
         private readonly string _filePath;
 
-        public JsonConfigurationRepository()
+        public JsonBacklightConfigurationRepository()
         {
-            _filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MSIKBMConfig.json");
+            _filePath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), 
+                "SoftPower",
+                "MSI.Keyboard.Backlight.Manager.Settings",
+                "MSIKBMConfig.json");
         }
 
 
@@ -23,11 +26,7 @@ namespace MSI.Keyboard.Backlight.Manager
                 return await GetConfigurationFromFile();
             }
 
-            var defaultConfiguration = GetDefaultConfiguration();
-
-            await SaveConfigurationToFile(defaultConfiguration);
-
-            return defaultConfiguration;
+            return GetDefaultConfiguration();
         }
 
         public async Task SaveConfiguration(BacklightConfiguration configuration)
@@ -43,12 +42,18 @@ namespace MSI.Keyboard.Backlight.Manager
             return File.Exists(_filePath);
         }
 
-        private async Task SaveConfigurationToFile(BacklightConfiguration defaultConfiguration)
+        private async Task SaveConfigurationToFile(BacklightConfiguration configuration)
         {
-            using (var fs = File.OpenWrite(_filePath))
+            if(!FileExists())
+            {
+                var directoryPath = Path.GetDirectoryName(_filePath);
+                Directory.CreateDirectory(directoryPath);
+            }
+
+            using (var fs = File.Open(_filePath, FileMode.Create, FileAccess.Write, FileShare.Read))
             using (var sw = new StreamWriter(fs))
             {
-                var content = JsonConvert.SerializeObject(_filePath);
+                var content = JsonConvert.SerializeObject(configuration);
 
                 await sw.WriteAsync(content);
             }
@@ -68,7 +73,9 @@ namespace MSI.Keyboard.Backlight.Manager
         {
             return new BacklightConfiguration()
             {
-                Mode = BacklightMode.TaskbarColorDependent
+                Mode = BacklightMode.TaskbarColorDependent,
+                Intensity = 100,
+                RefreshInterval = TimeSpan.FromMilliseconds(100)
             };
         }
     }

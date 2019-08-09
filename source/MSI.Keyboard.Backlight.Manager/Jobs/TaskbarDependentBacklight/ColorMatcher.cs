@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 
-namespace MSI.Keyboard.Backlight.Manager.Jobs.BacklightTaskbarDependent
+namespace MSI.Keyboard.Backlight.Manager.Jobs.TaskbarDependentBacklight
 {
     public class ColorMatcher
     {

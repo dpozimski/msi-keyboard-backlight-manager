@@ -2,18 +2,19 @@
 using MSI.Keyboard.Backlight.Service;
 using System.Drawing;
 
-namespace MSI.Keyboard.Backlight.Manager.Jobs.BacklightTaskbarDependent
+namespace MSI.Keyboard.Backlight.Manager.Jobs.TaskbarDependentBacklight
 {
-    public class BacklightTaskbarDependentJob : IBacklightTaskbarDependentJob
+    public class TaskbarDependentBacklightJob : ITaskbarDependentBacklightJob
     {
-        private const int Intensity = 100;
-
         private readonly IKeyboardService _keyboardService;
         private readonly IBacklightConfigurationBuilder _backlightConfigurationBuilder;
 
         private Color _currentColor;
 
-        public BacklightTaskbarDependentJob(IKeyboardService keyboardService,
+        public int Intensity { get; set; }
+        public bool RequireRefreshing => true;
+
+        public TaskbarDependentBacklightJob(IKeyboardService keyboardService,
                                             IBacklightConfigurationBuilder backlightConfigurationBuilder)
         {
             _keyboardService = keyboardService;
@@ -38,9 +39,14 @@ namespace MSI.Keyboard.Backlight.Manager.Jobs.BacklightTaskbarDependent
 
         private Color GetTaskbarColor()
         {
-            var taskbarPosition = ColorMatcher.GetTaskbarPosition().Location;
+            var taskbarPosition = ColorMatcher.GetTaskbarPosition();
 
-            return ColorMatcher.GetColourAt(taskbarPosition);
+            var x = taskbarPosition.X + taskbarPosition.Width - 1;
+            var y = taskbarPosition.Y + (taskbarPosition.Height / 2);
+
+            var point = new Point(x, y);
+
+            return ColorMatcher.GetColourAt(point);
         }
     }
 }
