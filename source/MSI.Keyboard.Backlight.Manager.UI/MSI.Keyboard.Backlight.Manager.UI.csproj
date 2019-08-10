@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.0.8" />
     <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0455" />
     <PackageReference Include="MahApps.Metro.IconPacks" Version="3.0.0-alpha0202" />
     <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />

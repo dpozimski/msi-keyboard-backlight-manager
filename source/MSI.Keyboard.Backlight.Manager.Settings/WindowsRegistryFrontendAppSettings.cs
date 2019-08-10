@@ -14,14 +14,14 @@ namespace MSI.Keyboard.Backlight.Manager.Settings
 
         public bool StartMinimized
         {
-            get => GetRegistryValue(AppSectionLocation, nameof(StartMinimized)) != null;
-            set => SetRegistryValue(AppSectionLocation, nameof(StartMinimized), value);
+            get => GetBooleanValueFromRegistry(AppSectionLocation, nameof(StartMinimized));
+            set => SetRegistryValue(AppSectionLocation, nameof(StartMinimized), value.ToString());
         }
 
         public bool ApplyConfigurationOnStartup
         {
-            get => GetRegistryValue(AppSectionLocation, nameof(ApplyConfigurationOnStartup)) != null;
-            set => SetRegistryValue(AppSectionLocation, nameof(ApplyConfigurationOnStartup), value);
+            get => GetBooleanValueFromRegistry(AppSectionLocation, nameof(ApplyConfigurationOnStartup));
+            set => SetRegistryValue(AppSectionLocation, nameof(ApplyConfigurationOnStartup), value.ToString());
         }
 
         public bool RunOnStartup
@@ -35,18 +35,23 @@ namespace MSI.Keyboard.Backlight.Manager.Settings
             _executingAssemblyLocation = Assembly.GetEntryAssembly().Location.Replace(".dll", ".exe");
         }
 
-        private object GetRegistryValue(string location, string name)
+        private bool GetBooleanValueFromRegistry(string location, string name)
+        {
+            return bool.Parse(GetRegistryValue(location, name) ?? "False");
+        }
+
+        private string GetRegistryValue(string location, string name)
         {
             var subKey = Registry.CurrentUser.CreateSubKey(location);
 
-            return subKey.GetValue(name);
+            return subKey.GetValue(name) as string;
         }
 
-        private void SetRegistryValue(string location, string name, object value)
+        private void SetRegistryValue(string location, string name, string value)
         {
             var subKey = Registry.CurrentUser.CreateSubKey(location, true);
 
-            if(value == default)
+            if(value is null)
             {
                 subKey.DeleteValue(name);
             }
