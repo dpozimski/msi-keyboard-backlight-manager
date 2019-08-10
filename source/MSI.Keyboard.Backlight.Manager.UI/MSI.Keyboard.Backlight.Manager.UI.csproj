@@ -15,6 +15,9 @@
     <RepositoryUrl>https://www.github.com/dpozimski/msi-keyboard-backlight-manager</RepositoryUrl>
     <RepositoryType>Public</RepositoryType>
     <Description>The WPF .NET Core App which enhance your user experience of using your MSI Notebook!</Description>
+    <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
+    <AssemblyName>MSI Keyboard Backlight Manager</AssemblyName>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,7 +42,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="NewFolder\" />
+    <None Include="..\..\README.md" Link="README.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
