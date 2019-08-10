@@ -19,7 +19,7 @@ Feel free to send some feature requests!
 
 # Changelog
 
-v1.0.0
+v1.0
 
 * Initial version
 
