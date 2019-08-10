@@ -8,6 +8,13 @@
 
   <PropertyGroup>
     <NoWarn>1701;1702;NU1701</NoWarn>
+    <Authors>Damian Pozimski</Authors>
+    <Company>SoftPower Damian Pozimski</Company>
+    <PackageIconUrl />
+    <PackageProjectUrl>https://www.github.com/dpozimski/msi-keyboard-backlight-manager</PackageProjectUrl>
+    <RepositoryUrl>https://www.github.com/dpozimski/msi-keyboard-backlight-manager</RepositoryUrl>
+    <RepositoryType>Public</RepositoryType>
+    <Description>The WPF .NET Core App which enhance your user experience of using your MSI Notebook!</Description>
   </PropertyGroup>
 
   <ItemGroup>
