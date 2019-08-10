@@ -10,7 +10,7 @@
     <NoWarn>1701;1702;NU1701</NoWarn>
     <Authors>Damian Pozimski</Authors>
     <Company>SoftPower Damian Pozimski</Company>
-    <PackageIconUrl />
+    <PackageIconUrl>https://raw.githubusercontent.com/dpozimski/msi-keyboard-backlight-manager/master/source/MSI.Keyboard.Backlight.Manager.UI/Assets/icon.ico</PackageIconUrl>
     <PackageProjectUrl>https://www.github.com/dpozimski/msi-keyboard-backlight-manager</PackageProjectUrl>
     <RepositoryUrl>https://www.github.com/dpozimski/msi-keyboard-backlight-manager</RepositoryUrl>
     <RepositoryType>Public</RepositoryType>
