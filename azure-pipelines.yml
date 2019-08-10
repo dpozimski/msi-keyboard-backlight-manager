@@ -17,10 +17,11 @@ variables:
 steps:
 - task: NuGetToolInstaller@1
 
-- task: DotNetCoreInstaller@0
-  displayName: 'Install .net core 3.0 (preview)'
+- task: UseDotNet@2
+  displayName: 'Use dotnet sdk 3.x'
   inputs:
-    version: '3.0.100-preview7-012821'
+    version: 3.x
+    includePreviewVersions: true
 
 - task: NuGetCommand@2
   inputs:
