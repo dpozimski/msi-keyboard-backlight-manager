@@ -1,5 +1,6 @@
 ﻿using System;
 using Autofac;
+using MSI.Keyboard.Backlight.Manager.Analytics.IoC;
 using MSI.Keyboard.Backlight.Manager.IoC;
 using MSI.Keyboard.Backlight.Manager.Settings.IoC;
 using MSI.Keyboard.Backlight.Manager.UI.Services;
@@ -41,6 +42,7 @@ namespace MSI.Keyboard.Backlight.Manager.UI.IoC
         {
             builder.RegisterModule<ManagerModule>();
             builder.RegisterModule<SettingsModule>();
+            builder.RegisterModule<AnalyticsModule>();
         }
     }
 }

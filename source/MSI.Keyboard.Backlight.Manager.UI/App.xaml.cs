@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using MSI.Keyboard.Backlight.Manager.Analytics;
 using MSI.Keyboard.Backlight.Manager.UI.IoC;
 using System.Windows;
 
@@ -31,6 +32,7 @@ namespace MSI.Keyboard.Backlight.Manager.UI
 
             ContainerScope = container.BeginLifetimeScope();
 
+            container.Resolve<IAnalyticsConfiguration>().Configure();
             var window = ContainerScope.Resolve<MainWindow>();
             window.Show();
         }

@@ -6,6 +6,10 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <NoWarn>1701;1702;NU1701</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="Assets\icon.ico" />
   </ItemGroup>
@@ -18,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MSI.Keyboard.Backlight.Manager.Analytics\MSI.Keyboard.Backlight.Manager.Analytics.csproj" />
     <ProjectReference Include="..\MSI.Keyboard.Backlight.Manager.Settings\MSI.Keyboard.Backlight.Manager.Settings.csproj" />
     <ProjectReference Include="..\MSI.Keyboard.Backlight.Manager\MSI.Keyboard.Backlight.Manager.csproj" />
   </ItemGroup>
