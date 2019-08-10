@@ -1,1 +1,1 @@
-AdvancedInstaller.exe /build script.aip
+AdvancedInstaller /build script.aip
