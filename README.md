@@ -31,4 +31,4 @@ v1.0
 
 # Screens
 
-![Drag Racing](https://github.com/dpozimski/msi-keyboard-backlight-manager/raw/master/images/ss1.png)
+![Main](https://github.com/dpozimski/msi-keyboard-backlight-manager/raw/master/images/ss1.png)
