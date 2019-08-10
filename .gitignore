@@ -328,3 +328,8 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+#Ignore setup files
+/installer/AppOutput/*
+/installer/Releases/*
+/installer/script-cache/*
