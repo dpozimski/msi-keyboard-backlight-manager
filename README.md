@@ -28,3 +28,7 @@ v1.0
 * Switch to release tab 
 * Download the newest version.
 * Run MSI File
+
+# Screens
+
+![Drag Racing](https://github.com/dpozimski/msi-keyboard-backlight-manager/raw/master/images/ss1.png)
