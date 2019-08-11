@@ -26,7 +26,7 @@ namespace MSI.Keyboard.Backlight.Manager.Analytics
             invocation.Proceed();
             stopwatch.Stop();
 
-            var key = $"Interceptor_{invocation.Method.Name}";
+            var key = $"{invocation.TargetType.Name}_{invocation.Method.Name}";
             var parameters = MapParameters(invocation.Arguments, invocation.Method.GetParameters()).ToDictionary(x => x.Key, x => x.Value?.ToString());
             var metrics = new Dictionary<string, double>()
             {
