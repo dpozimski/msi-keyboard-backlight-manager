@@ -23,7 +23,7 @@ namespace MSI.Keyboard.Backlight.Manager.Analytics
             var client = new TelemetryClient(config);
             client.Context.Component.Version = Assembly.GetEntryAssembly().GetName().Version.ToString();
             client.Context.Session.Id = Guid.NewGuid().ToString();
-            client.Context.User.Id = (Environment.UserName + Environment.MachineName).GetHashCode().ToString();
+            client.Context.User.Id = $"{Environment.UserName}_{Environment.MachineName}";
             client.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
 
             return client;
