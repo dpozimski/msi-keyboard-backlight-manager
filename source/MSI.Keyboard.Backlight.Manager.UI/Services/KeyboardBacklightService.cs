@@ -2,28 +2,44 @@
 using System.Windows;
 using MediatR;
 using MSI.Keyboard.Backlight.Manager.Commands;
-using MSI.Keyboard.Backlight.Manager.Notifications;
 using MSI.Keyboard.Backlight.Manager.Queries;
 using MSI.Keyboard.Backlight.Manager.Settings;
 
 namespace MSI.Keyboard.Backlight.Manager.UI.Services
 {
-    public class RestoreConfigurationService : IRestoreConfigurationService
+    public class KeyboardBacklightService : IKeyboardBacklightService
     {
         private readonly IFrontendAppSettings _frontendAppSettings;
-        private readonly INotificationService _notificationService;
         private readonly IMediator _mediator;
 
-        public RestoreConfigurationService(IFrontendAppSettings frontendAppSettings,
-                                           INotificationService notificationService,
-                                           IMediator mediator)
+        public KeyboardBacklightService(IFrontendAppSettings frontendAppSettings,
+                                        IMediator mediator)
         {
             _frontendAppSettings = frontendAppSettings;
-            _notificationService = notificationService;
             _mediator = mediator;
         }
 
-        public async void RestoreIfNeeded()
+        public async Task StopBacklightKeyboardManagement()
+        {
+            await _mediator.Send(new StopBacklightKeyboardManagementCommand());
+        }
+
+        public async Task<bool> IsDeviceSupported()
+        {
+            return await _mediator.Send(new CheckIfDeviceIsSupportedQuery());
+        }
+
+        public async Task<BacklightConfiguration> GetConfiguration()
+        {
+            return await _mediator.Send(new GetConfigurationQuery());
+        }
+
+        public async Task ApplyConfiguration(BacklightConfiguration configuration)
+        {
+            await _mediator.Send(new ApplyConfigurationCommand(configuration));
+        }
+
+        public async Task RestoreIfNeeded()
         {
             await RestoreKeyboardConfiguration();
             RestoreFrontendConfiguration();
@@ -33,15 +49,6 @@ namespace MSI.Keyboard.Backlight.Manager.UI.Services
         {
             if (!_frontendAppSettings.ApplyConfigurationOnStartup)
                 return;
-
-            var deviceSupported = await _mediator.Send(new CheckIfDeviceIsSupportedQuery());
-
-            if(!deviceSupported)
-            {
-                _notificationService.ShowError("Your device is not supported");
-
-                return;
-            }
 
             var configuration = await _mediator.Send(new GetConfigurationQuery());
 

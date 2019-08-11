@@ -18,6 +18,9 @@
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding RestoreConfigurationCommand}" />
         </i:EventTrigger>
+        <i:EventTrigger EventName="Closed">
+            <i:InvokeCommandAction Command="{Binding StopKeyboardBacklightManagementCommand}" />
+        </i:EventTrigger>
     </i:Interaction.Triggers>
 
 
@@ -59,7 +62,7 @@
             <views:ConfigurationView />
         </Grid>
 
-        <views:StatusBarView Grid.Row="2"/>
+        <views:StatusBarView Grid.Row="2" />
 
     </Grid>
 

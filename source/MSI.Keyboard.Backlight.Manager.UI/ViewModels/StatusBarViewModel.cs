@@ -1,16 +1,15 @@
-﻿using MediatR;
-using MSI.Keyboard.Backlight.Manager.Queries;
+﻿using MSI.Keyboard.Backlight.Manager.UI.Services;
 using System;
 using System.Timers;
 using System.Windows.Input;
 
 namespace MSI.Keyboard.Backlight.Manager.UI.ViewModels
 {
-    public class StatusBarViewModel : ViewModelBase
+    public class StatusBarViewModel : ViewModelBase, IDisposable
     {
-        private readonly IMediator _mediator;
-
+        private readonly IKeyboardBacklightService _keyboardBacklightService;
         private bool _deviceNotSupported;
+        private Timer _timer;
 
         public bool DeviceNotSupported
         {
@@ -22,9 +21,9 @@ namespace MSI.Keyboard.Backlight.Manager.UI.ViewModels
 
         public ICommand CheckIsDeviceSupportedCommand { get; }
 
-        public StatusBarViewModel(IMediator mediator)
+        public StatusBarViewModel(IKeyboardBacklightService keyboardBacklightService)
         {
-            _mediator = mediator;
+            _keyboardBacklightService = keyboardBacklightService;
 
             CheckIsDeviceSupportedCommand = new RelayCommand<object>(CheckIsDeviceSupported);
 
@@ -33,15 +32,20 @@ namespace MSI.Keyboard.Backlight.Manager.UI.ViewModels
 
         private void InitTimer()
         {
-            var timer = new Timer();
-            timer.Interval = 1000;
-            timer.Elapsed += (o, e) => RaisePropertyChanged(nameof(Now));
-            timer.Start();
+            _timer = new Timer();
+            _timer.Interval = 1000;
+            _timer.Elapsed += (o, e) => RaisePropertyChanged(nameof(Now));
+            _timer.Start();
         }
 
         private async void CheckIsDeviceSupported(object obj)
         {
-            DeviceNotSupported = !(await _mediator.Send(new CheckIfDeviceIsSupportedQuery()));
+            DeviceNotSupported = !await _keyboardBacklightService.IsDeviceSupported();
+        }
+
+        public void Dispose()
+        {
+            _timer?.Dispose();
         }
     }
 }

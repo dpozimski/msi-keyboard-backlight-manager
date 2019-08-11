@@ -24,7 +24,7 @@ namespace MSI.Keyboard.Backlight.Manager.UI.IoC
 
         private void RegisterServices(ContainerBuilder builder)
         {
-            builder.RegisterType<RestoreConfigurationService>().As<IRestoreConfigurationService>();
+            builder.RegisterType<KeyboardBacklightService>().As<IKeyboardBacklightService>();
             builder.RegisterType<MutexBasedSingleInstanceValidator>().As<ISingleInstanceValidator>().SingleInstance();
         }
 

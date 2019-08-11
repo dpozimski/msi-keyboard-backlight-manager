@@ -1,4 +1,6 @@
-﻿using MSI.Keyboard.Backlight.Manager.UI.Services;
+﻿using MSI.Keyboard.Backlight.Manager.Notifications;
+using MSI.Keyboard.Backlight.Manager.UI.Services;
+using System;
 using System.Diagnostics;
 using System.Windows.Input;
 
@@ -6,22 +8,41 @@ namespace MSI.Keyboard.Backlight.Manager.UI.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        private readonly IRestoreConfigurationService _restoreConfigurationService;
+        private readonly IKeyboardBacklightService _keyboardBacklightService;
+        private readonly INotificationService _notificationService;
 
         public ICommand OpenGithubCommand { get; }
         public ICommand RestoreConfigurationCommand { get; }
+        public ICommand StopKeyboardBacklightManagementCommand { get; }
 
-        public MainWindowViewModel(IRestoreConfigurationService restoreConfigurationService)
+        public MainWindowViewModel(IKeyboardBacklightService keyboardBacklightService,
+                                   INotificationService notificationService)
         {
             OpenGithubCommand = new RelayCommand<object>(OpenGithub);
             RestoreConfigurationCommand = new RelayCommand<object>(RestoreConfiguration);
+            StopKeyboardBacklightManagementCommand = new RelayCommand<object>(StopKeyboardBacklightManagement);
 
-            _restoreConfigurationService = restoreConfigurationService;
+            _keyboardBacklightService = keyboardBacklightService;
+            _notificationService = notificationService;
         }
 
-        private void RestoreConfiguration(object obj)
+        private async void StopKeyboardBacklightManagement(object obj)
         {
-            _restoreConfigurationService.RestoreIfNeeded();
+            await _keyboardBacklightService.StopBacklightKeyboardManagement();
+        }
+
+        private async void RestoreConfiguration(object obj)
+        {
+            var deviceSupported = await _keyboardBacklightService.IsDeviceSupported();
+
+            if (!deviceSupported)
+            {
+                _notificationService.ShowError("Your device is not supported");
+
+                return;
+            }
+
+            await _keyboardBacklightService.RestoreIfNeeded();
         }
 
         private void OpenGithub(object obj)

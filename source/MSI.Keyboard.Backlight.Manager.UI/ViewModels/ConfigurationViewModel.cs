@@ -1,7 +1,5 @@
-﻿using MediatR;
-using MSI.Keyboard.Backlight.Manager.Commands;
-using MSI.Keyboard.Backlight.Manager.Queries;
-using MSI.Keyboard.Backlight.Manager.Settings;
+﻿using MSI.Keyboard.Backlight.Manager.Settings;
+using MSI.Keyboard.Backlight.Manager.UI.Services;
 using System;
 using System.Windows.Input;
 
@@ -9,9 +7,8 @@ namespace MSI.Keyboard.Backlight.Manager.UI.ViewModels
 {
     public class ConfigurationViewModel : ViewModelBase
     {
-        private readonly IMediator _mediator;
         private readonly IFrontendAppSettings _frontendAppSettings;
-
+        private readonly IKeyboardBacklightService _keyboardBacklightService;
         private bool _deviceSupported;
         private bool _configurationChanged;
         private BacklightConfiguration _backlightConfiguration;
@@ -73,12 +70,11 @@ namespace MSI.Keyboard.Backlight.Manager.UI.ViewModels
 
         public ICommand RestoreBacklightConfigurationCommand { get; }
 
-        public ConfigurationViewModel(IMediator mediator,
-                                      IFrontendAppSettings frontendAppSettings)
+        public ConfigurationViewModel(IFrontendAppSettings frontendAppSettings,
+                                      IKeyboardBacklightService keyboardBacklightService)
         {
-            _mediator = mediator;
             _frontendAppSettings = frontendAppSettings;
-
+            _keyboardBacklightService = keyboardBacklightService;
             _backlightConfiguration = new BacklightConfiguration();
             _configurationChanged = true;
 
@@ -89,8 +85,8 @@ namespace MSI.Keyboard.Backlight.Manager.UI.ViewModels
 
         private async void RestoreBacklightConfiguration(object obj)
         {
-            _deviceSupported = await _mediator.Send(new CheckIfDeviceIsSupportedQuery());
-            _backlightConfiguration = await _mediator.Send(new GetConfigurationQuery());
+            _deviceSupported = await _keyboardBacklightService.IsDeviceSupported();
+            _backlightConfiguration = await _keyboardBacklightService.GetConfiguration();
 
             RaisePropertyChanged(null);
         }
@@ -106,7 +102,7 @@ namespace MSI.Keyboard.Backlight.Manager.UI.ViewModels
 
         private async void ApplyConfiguration(object obj)
         {
-            await _mediator.Send(new ApplyConfigurationCommand(_backlightConfiguration));
+            await _keyboardBacklightService.ApplyConfiguration(_backlightConfiguration);
 
             ConfigurationChanged = false;
         }
