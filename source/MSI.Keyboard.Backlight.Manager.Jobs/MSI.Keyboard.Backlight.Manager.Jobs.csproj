@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.3" />
+    <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.5.0" />
     <PackageReference Include="MSI.Keyboard.Backlight" Version="1.0.7" />
     <PackageReference Include="NAudio" Version="1.9.0" />
     <PackageReference Include="System.Drawing.Common" Version="4.6.0-preview7.19362.9" />
@@ -17,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MSI.backlight.Keyboard.Manager.Jobs.Models\MSI.backlight.Keyboard.Manager.Jobs.Models.csproj" />
+    <ProjectReference Include="..\MSI.Keyboard.Backlight.Manager.Analytics\MSI.Keyboard.Backlight.Manager.Analytics.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,8 @@
 ﻿using Autofac;
+using Autofac.Extras.DynamicProxy;
 using MediatR;
 using MediatR.Extensions.Autofac.DependencyInjection;
+using MSI.Keyboard.Backlight.Manager.Analytics;
 using MSI.Keyboard.Backlight.Manager.Jobs.IoC;
 using MSI.Keyboard.Backlight.Service;
 using System;
@@ -20,7 +22,9 @@ namespace MSI.Keyboard.Backlight.Manager.IoC
 
             builder.Register(c => KeyboardServiceFactory.Create())
                    .AsSelf()
-                   .SingleInstance();
+                   .SingleInstance()
+                   .EnableInterfaceInterceptors()
+                   .InterceptedBy(typeof(AnalyticsInterceptor));
 
             RegisterModules(builder);
         }

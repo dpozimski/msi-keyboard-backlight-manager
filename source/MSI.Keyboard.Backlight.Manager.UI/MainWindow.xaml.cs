@@ -1,4 +1,6 @@
-﻿using MahApps.Metro.Controls;
+﻿using Autofac;
+using MahApps.Metro.Controls;
+using MSI.Keyboard.Backlight.Manager.UI.ViewModels;
 using System;
 using System.Windows;
 
@@ -11,6 +13,8 @@ namespace MSI.Keyboard.Backlight.Manager.UI
     {
         public MainWindow()
         {
+            DataContext = App.ContainerScope.Resolve<MainWindowViewModel>();
+
             InitializeComponent();
         }
 

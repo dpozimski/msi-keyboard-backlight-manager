@@ -1,5 +1,7 @@
 ﻿using Autofac;
+using Autofac.Extras.DynamicProxy;
 using MSI.Keyboard.Backlight.Configuration;
+using MSI.Keyboard.Backlight.Manager.Analytics;
 using MSI.Keyboard.Backlight.Manager.Jobs.DeviceMasterPeak;
 using MSI.Keyboard.Backlight.Manager.Jobs.Models;
 using MSI.Keyboard.Backlight.Manager.Jobs.RgbBacklight;
@@ -11,10 +13,14 @@ namespace MSI.Keyboard.Backlight.Manager.Jobs.IoC
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<BacklightJobFactory>().As<IBacklightJobFactory>();
+            builder.RegisterType<BacklightJobFactory>().As<IBacklightJobFactory>()
+                   .EnableInterfaceInterceptors()
+                   .InterceptedBy(typeof(AnalyticsInterceptor));
             builder.Register(c => BacklightConfigurationBuilderFactory.Create())
                    .InstancePerDependency()
-                   .AsSelf();
+                   .AsSelf()
+                   .EnableInterfaceInterceptors()
+                   .InterceptedBy(typeof(AnalyticsInterceptor));
 
             RegisterJob<RgbBacklightJob>(builder, BacklightJobType.Rgb);
             RegisterJob<TaskbarDependentBacklightJob>(builder, BacklightJobType.TaskbarColorDependent);
@@ -25,7 +31,9 @@ namespace MSI.Keyboard.Backlight.Manager.Jobs.IoC
             where T : IBacklightJob
         {
             builder.RegisterType<T>()
-                   .Keyed<IBacklightJob>(type);
+                   .Keyed<IBacklightJob>(type)
+                   .EnableInterfaceInterceptors()
+                   .InterceptedBy(typeof(AnalyticsInterceptor));
         }
             
     }

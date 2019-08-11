@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using Autofac.Extras.DynamicProxy;
+using MSI.Keyboard.Backlight.Manager.Analytics;
 using System;
 using System.Windows.Threading;
 using ToastNotifications;
@@ -11,7 +13,10 @@ namespace MSI.Keyboard.Backlight.Manager.Notifications.IoC
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<NotificationsService>().As<INotificationService>();
+            builder.RegisterType<NotificationsService>().As<INotificationService>()
+                   .EnableInterfaceInterceptors()
+                   .InterceptedBy(typeof(AnalyticsInterceptor));
+
             builder.Register(c => CreateNotifier(c.Resolve<Dispatcher>())).SingleInstance();
         }
 

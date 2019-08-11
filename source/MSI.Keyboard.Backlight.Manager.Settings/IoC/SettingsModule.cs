@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using Autofac.Extras.DynamicProxy;
+using MSI.Keyboard.Backlight.Manager.Analytics;
 
 namespace MSI.Keyboard.Backlight.Manager.Settings.IoC
 {
@@ -7,15 +9,19 @@ namespace MSI.Keyboard.Backlight.Manager.Settings.IoC
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<JsonBacklightConfigurationRepository>()
-                .AsSelf();
+                   .AsSelf();
 
             builder.RegisterType<InMemoryCacheBacklightConfigurationRepository>()
-                .As<IBacklightConfigurationRepository>()
-                .SingleInstance();
+                   .As<IBacklightConfigurationRepository>()
+                   .SingleInstance()
+                   .EnableInterfaceInterceptors()
+                   .InterceptedBy(typeof(AnalyticsInterceptor));
 
             builder.RegisterType<WindowsRegistryFrontendAppSettings>()
                    .As<IFrontendAppSettings>()
-                   .SingleInstance();
+                   .SingleInstance()
+                   .EnableInterfaceInterceptors()
+                   .InterceptedBy(typeof(AnalyticsInterceptor));
 
         }
     }
