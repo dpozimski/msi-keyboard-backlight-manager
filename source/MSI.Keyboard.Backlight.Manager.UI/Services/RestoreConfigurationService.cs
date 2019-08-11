@@ -2,6 +2,8 @@
 using System.Windows;
 using MediatR;
 using MSI.Keyboard.Backlight.Manager.Commands;
+using MSI.Keyboard.Backlight.Manager.Notifications;
+using MSI.Keyboard.Backlight.Manager.Queries;
 using MSI.Keyboard.Backlight.Manager.Settings;
 
 namespace MSI.Keyboard.Backlight.Manager.UI.Services
@@ -9,12 +11,15 @@ namespace MSI.Keyboard.Backlight.Manager.UI.Services
     public class RestoreConfigurationService : IRestoreConfigurationService
     {
         private readonly IFrontendAppSettings _frontendAppSettings;
+        private readonly INotificationService _notificationService;
         private readonly IMediator _mediator;
 
         public RestoreConfigurationService(IFrontendAppSettings frontendAppSettings,
+                                           INotificationService notificationService,
                                            IMediator mediator)
         {
             _frontendAppSettings = frontendAppSettings;
+            _notificationService = notificationService;
             _mediator = mediator;
         }
 
@@ -28,6 +33,15 @@ namespace MSI.Keyboard.Backlight.Manager.UI.Services
         {
             if (!_frontendAppSettings.ApplyConfigurationOnStartup)
                 return;
+
+            var deviceSupported = await _mediator.Send(new CheckIfDeviceIsSupportedQuery());
+
+            if(!deviceSupported)
+            {
+                _notificationService.ShowError("Your device is not supported");
+
+                return;
+            }
 
             var configuration = await _mediator.Send(new GetConfigurationQuery());
 

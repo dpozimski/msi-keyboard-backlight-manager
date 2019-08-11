@@ -19,6 +19,13 @@ Feel free to send some feature requests!
 
 # Changelog
 
+v1.1
+
+* Cannot start multiple times
+* Checks if the device is supported
+* StatusBar has transparent color
+* StatusBar presents optional message if device is not supported
+
 v1.0
 
 * Initial version

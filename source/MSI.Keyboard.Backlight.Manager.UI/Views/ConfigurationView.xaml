@@ -1,6 +1,7 @@
 ﻿<UserControl x:Class="MSI.Keyboard.Backlight.Manager.UI.Views.ConfigurationView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:MSI.Keyboard.Backlight.Manager.UI.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
@@ -52,11 +53,14 @@
             <Thickness x:Key="MetroHeaderMargin">0,0,0,10</Thickness>
             <Thickness x:Key="HeaderElementMargin">0,5,0,0</Thickness>
             <Thickness x:Key="CheckBoxMargin">8,4,4,4</Thickness>
+            <converters:BooleanAndConverter x:Key="BooleanAndConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
 
     <StackPanel Margin="10" Orientation="Vertical">
-        <mahapps:MetroHeader Margin="{StaticResource MetroHeaderMargin}" Header="Backlight mode">
+        <mahapps:MetroHeader Margin="{StaticResource MetroHeaderMargin}"
+                             Header="Backlight mode"
+                             IsEnabled="{Binding DeviceSupported, Mode=OneWay}">
             <Grid Margin="{StaticResource HeaderElementMargin}" HorizontalAlignment="Left">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -73,7 +77,9 @@
                              IsChecked="{Binding RgbDependentSelected, Mode=OneWay}" />
             </Grid>
         </mahapps:MetroHeader>
-        <mahapps:MetroHeader Margin="{StaticResource MetroHeaderMargin}" Header="Intensity">
+        <mahapps:MetroHeader Margin="{StaticResource MetroHeaderMargin}"
+                             Header="Intensity"
+                             IsEnabled="{Binding DeviceSupported, Mode=OneWay}">
             <Slider Width="200"
                     Margin="{StaticResource HeaderElementMargin}"
                     HorizontalAlignment="Left" mahapps:SliderHelper.EnableMouseWheel="MouseHover"
@@ -98,8 +104,13 @@
 
                 <Button Grid.Row="0" Grid.Column="0"
                         Command="{Binding ApplyConfigurationCommand}"
-                        IsEnabled="{Binding ConfigurationChanged, Mode=OneWay}"
                         Style="{StaticResource AccentCircleButtonStyle}">
+                    <Button.IsEnabled>
+                        <MultiBinding Converter="{StaticResource BooleanAndConverter}">
+                            <Binding Mode="OneWay" Path="ConfigurationChanged" />
+                            <Binding Mode="OneWay" Path="DeviceSupported" />
+                        </MultiBinding>
+                    </Button.IsEnabled>
                     <iconPacks:PackIconModern Kind="Check" Style="{StaticResource AccentPackIconModernStyle}" />
                 </Button>
                 <Label Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Content="Apply configuration" />

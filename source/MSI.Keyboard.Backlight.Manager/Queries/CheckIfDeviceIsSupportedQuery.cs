@@ -2,7 +2,7 @@
 
 namespace MSI.Keyboard.Backlight.Manager.Queries
 {
-    public class GetConfigurationQuery : IRequest<BacklightConfiguration>
+    public class CheckIfDeviceIsSupportedQuery : IRequest<bool>
     {
     }
 }

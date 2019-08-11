@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using MSI.Keyboard.Backlight.Manager.Commands;
+using MSI.Keyboard.Backlight.Manager.Queries;
 using MSI.Keyboard.Backlight.Manager.Settings;
 using System;
 using System.Windows.Input;
@@ -11,8 +12,15 @@ namespace MSI.Keyboard.Backlight.Manager.UI.ViewModels
         private readonly IMediator _mediator;
         private readonly IFrontendAppSettings _frontendAppSettings;
 
+        private bool _deviceSupported;
         private bool _configurationChanged;
         private BacklightConfiguration _backlightConfiguration;
+
+        public bool DeviceSupported
+        {
+            get => _deviceSupported;
+            private set => RaiseAndSetIfChanged(ref _deviceSupported, value);
+        }
 
         public bool ConfigurationChanged
         {
@@ -81,6 +89,7 @@ namespace MSI.Keyboard.Backlight.Manager.UI.ViewModels
 
         private async void RestoreBacklightConfiguration(object obj)
         {
+            _deviceSupported = await _mediator.Send(new CheckIfDeviceIsSupportedQuery());
             _backlightConfiguration = await _mediator.Send(new GetConfigurationQuery());
 
             RaisePropertyChanged(null);

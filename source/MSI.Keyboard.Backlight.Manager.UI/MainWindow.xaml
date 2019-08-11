@@ -59,11 +59,7 @@
             <views:ConfigurationView />
         </Grid>
 
-        <StatusBar Grid.Row="2">
-            <StatusBarItem>SoftPower @ 2019</StatusBarItem>
-            <StatusBarItem />
-            <StatusBarItem HorizontalAlignment="Right" Content="{Binding Now, Mode=OneWay}" />
-        </StatusBar>
+        <views:StatusBarView Grid.Row="2"/>
 
     </Grid>
 

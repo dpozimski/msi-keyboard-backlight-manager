@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using MSI.Keyboard.Backlight.Manager.Queries;
 
 namespace MSI.Keyboard.Backlight.Manager.Commands
 {

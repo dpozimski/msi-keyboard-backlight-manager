@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSI.Keyboard.Backlight.Mana
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSI.Keyboard.Backlight.Manager.Settings", "source\MSI.Keyboard.Backlight.Manager.Settings\MSI.Keyboard.Backlight.Manager.Settings.csproj", "{083F3C50-7C8E-48FB-BE5A-ECAC64D3BA40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSI.Keyboard.Backlight.Manager.Analytics", "source\MSI.Keyboard.Backlight.Manager.Analytics\MSI.Keyboard.Backlight.Manager.Analytics.csproj", "{B26460C9-32B6-44EE-B109-2DBA4D09B8DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSI.Keyboard.Backlight.Manager.Analytics", "source\MSI.Keyboard.Backlight.Manager.Analytics\MSI.Keyboard.Backlight.Manager.Analytics.csproj", "{B26460C9-32B6-44EE-B109-2DBA4D09B8DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSI.Keyboard.Backlight.Manager.Notifications", "source\MSI.Keyboard.Backlight.Manager.Notifications\MSI.Keyboard.Backlight.Manager.Notifications.csproj", "{DAEA3C2C-AEBA-4874-9CEA-38B0B5BDAE4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{B26460C9-32B6-44EE-B109-2DBA4D09B8DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B26460C9-32B6-44EE-B109-2DBA4D09B8DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B26460C9-32B6-44EE-B109-2DBA4D09B8DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAEA3C2C-AEBA-4874-9CEA-38B0B5BDAE4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAEA3C2C-AEBA-4874-9CEA-38B0B5BDAE4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAEA3C2C-AEBA-4874-9CEA-38B0B5BDAE4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAEA3C2C-AEBA-4874-9CEA-38B0B5BDAE4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

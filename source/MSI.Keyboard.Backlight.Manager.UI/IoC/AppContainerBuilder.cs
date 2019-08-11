@@ -1,7 +1,7 @@
-﻿using System;
-using Autofac;
+﻿using Autofac;
 using MSI.Keyboard.Backlight.Manager.Analytics.IoC;
 using MSI.Keyboard.Backlight.Manager.IoC;
+using MSI.Keyboard.Backlight.Manager.Notifications.IoC;
 using MSI.Keyboard.Backlight.Manager.Settings.IoC;
 using MSI.Keyboard.Backlight.Manager.UI.Services;
 using MSI.Keyboard.Backlight.Manager.UI.ViewModels;
@@ -25,17 +25,20 @@ namespace MSI.Keyboard.Backlight.Manager.UI.IoC
         private void RegisterServices(ContainerBuilder builder)
         {
             builder.RegisterType<RestoreConfigurationService>().As<IRestoreConfigurationService>();
+            builder.RegisterType<MutexBasedSingleInstanceValidator>().As<ISingleInstanceValidator>().SingleInstance();
         }
 
         private void RegisterViews(ContainerBuilder builder)
         {
-            builder.RegisterType<MainWindow>().AsSelf();
+            builder.RegisterType<MainWindow>().AsSelf().SingleInstance();
+            builder.Register(c => c.Resolve<MainWindow>().Dispatcher);
         }
 
         private void RegisterViewModels(ContainerBuilder builder)
         {
             builder.RegisterType<MainWindowViewModel>().AsSelf();
             builder.RegisterType<ConfigurationViewModel>().AsSelf();
+            builder.RegisterType<StatusBarViewModel>().AsSelf();
         }
 
         private void RegisterModules(ContainerBuilder builder)
@@ -43,6 +46,7 @@ namespace MSI.Keyboard.Backlight.Manager.UI.IoC
             builder.RegisterModule<ManagerModule>();
             builder.RegisterModule<SettingsModule>();
             builder.RegisterModule<AnalyticsModule>();
+            builder.RegisterModule<NotificationsModule>();
         }
     }
 }
