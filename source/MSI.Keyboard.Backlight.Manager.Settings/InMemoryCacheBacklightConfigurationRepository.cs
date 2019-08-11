@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MSI.Keyboard.Backlight.Manager.Jobs.Models;
+using System;
 using System.Threading.Tasks;
 
 namespace MSI.Keyboard.Backlight.Manager.Settings
@@ -7,14 +8,14 @@ namespace MSI.Keyboard.Backlight.Manager.Settings
     {
         private readonly JsonBacklightConfigurationRepository _jsonBacklightConfigurationRepository;
 
-        private BacklightConfiguration _cachedBacklightConfiguration;
+        private JobsConfiguration _cachedBacklightConfiguration;
 
         public InMemoryCacheBacklightConfigurationRepository(JsonBacklightConfigurationRepository jsonBacklightConfigurationRepository)
         {
             _jsonBacklightConfigurationRepository = jsonBacklightConfigurationRepository;
         }
 
-        public async Task<BacklightConfiguration> GetConfiguration()
+        public async Task<JobsConfiguration> GetConfiguration()
         {
             if (_cachedBacklightConfiguration != null)
                 return _cachedBacklightConfiguration;
@@ -22,7 +23,7 @@ namespace MSI.Keyboard.Backlight.Manager.Settings
             return _cachedBacklightConfiguration = await _jsonBacklightConfigurationRepository.GetConfiguration();
         }
 
-        public async Task SaveConfiguration(BacklightConfiguration configuration)
+        public async Task SaveConfiguration(JobsConfiguration configuration)
         {
             await _jsonBacklightConfigurationRepository.SaveConfiguration(configuration);
 

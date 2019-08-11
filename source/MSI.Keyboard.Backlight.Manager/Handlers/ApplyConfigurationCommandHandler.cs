@@ -2,6 +2,7 @@
 using MediatR;
 using MSI.Keyboard.Backlight.Manager.Commands;
 using MSI.Keyboard.Backlight.Manager.Jobs;
+using MSI.Keyboard.Backlight.Manager.Jobs.Models;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,16 +12,13 @@ namespace MSI.Keyboard.Backlight.Manager.Handlers
     public class ApplyConfigurationCommandHandler : IRequestHandler<ApplyConfigurationCommand>
     {
         private readonly IBacklightConfigurationRepository _repository;
-        private readonly ITaskbarDependentBacklightJob _taskbarDependentBacklightJob;
-        private readonly IRgbBacklightJob _rgbBacklightJob;
+        private readonly IBacklightJobFactory _backlightJobFactory;
 
         public ApplyConfigurationCommandHandler(IBacklightConfigurationRepository repository,
-                                                ITaskbarDependentBacklightJob taskbarDependentBacklightJob,
-                                                IRgbBacklightJob rgbBacklightJob)
+                                                IBacklightJobFactory backlightJobFactory)
         {
             _repository = repository;
-            _taskbarDependentBacklightJob = taskbarDependentBacklightJob;
-            _rgbBacklightJob = rgbBacklightJob;
+            _backlightJobFactory = backlightJobFactory;
         }
 
         public async Task<Unit> Handle(ApplyConfigurationCommand request, CancellationToken cancellationToken)
@@ -31,7 +29,7 @@ namespace MSI.Keyboard.Backlight.Manager.Handlers
             return Unit.Value;
         }
 
-        private async Task SaveConfiguration(BacklightConfiguration configuration)
+        private async Task SaveConfiguration(JobsConfiguration configuration)
         {
             if (configuration == null)
                 throw new ArgumentNullException(nameof(configuration));
@@ -39,40 +37,29 @@ namespace MSI.Keyboard.Backlight.Manager.Handlers
             await _repository.SaveConfiguration(configuration);
         }
 
-        private void ApplyConfigurationToKeyboardService(BacklightConfiguration configuration)
+        private void ApplyConfigurationToKeyboardService(JobsConfiguration configuration)
         {
             var registry = new Registry();
 
             JobManager.StopAndBlock();
+            JobManager.RemoveAllJobs();
 
-            var backlightJob = GetBacklightJob(configuration.Mode);
+            var backlightJob = _backlightJobFactory.Create(configuration.Mode);
 
             backlightJob.Intensity = configuration.Intensity;
 
-            var timeUnit = registry.Schedule(backlightJob)
+            var quartzBacklightJob = new QuartzBacklightJobAdapter(backlightJob);
+            var timeUnit = registry.Schedule(quartzBacklightJob)
                                    .NonReentrant()
                                    .ToRunNow();
 
-            if (backlightJob.RequireRefreshing)
+            if (backlightJob.RefreshInterval > TimeSpan.Zero)
             {
-                timeUnit.AndEvery((int)configuration.RefreshInterval.TotalMilliseconds)
+                timeUnit.AndEvery((int)backlightJob.RefreshInterval.TotalMilliseconds)
                         .Milliseconds();
             }
 
             JobManager.Initialize(registry);
-        }
-
-        private IBacklightJob GetBacklightJob(BacklightMode mode)
-        {
-            switch(mode)
-            {
-                case BacklightMode.TaskbarColorDependent:
-                    return _taskbarDependentBacklightJob;
-                case BacklightMode.Rgb:
-                    return _rgbBacklightJob;
-                default:
-                    throw new NotImplementedException(mode.ToString());
-            }
         }
     }
 }

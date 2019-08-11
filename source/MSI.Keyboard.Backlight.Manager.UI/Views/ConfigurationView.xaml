@@ -54,6 +54,9 @@
             <Thickness x:Key="HeaderElementMargin">0,5,0,0</Thickness>
             <Thickness x:Key="CheckBoxMargin">8,4,4,4</Thickness>
             <converters:BooleanAndConverter x:Key="BooleanAndConverter" />
+            <converters:BacklightJobToCheckedConverter x:Key="RgbBacklightJobToCheckedConverter" Mode="Rgb" />
+            <converters:BacklightJobToCheckedConverter x:Key="TaskbarColorDependentBacklightJobToCheckedConverter" Mode="TaskbarColorDependent" />
+            <converters:BacklightJobToCheckedConverter x:Key="VolumeMasterPeakBacklightJobToCheckedConverter" Mode="VolumeMasterPeak" />
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -65,16 +68,23 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <RadioButton Grid.Row="0"
                              Command="{Binding ApplyBacklightModeCommand}"
                              CommandParameter="TaskbarColorDependent" Content="Backlight has the same color as Windows Taskbar"
                              GroupName="1"
-                             IsChecked="{Binding TaskbarColorDependentSelected, Mode=OneWay}" />
+                             IsChecked="{Binding SelectedBacklightJob, Mode=OneWay, Converter={StaticResource TaskbarColorDependentBacklightJobToCheckedConverter}}" />
                 <RadioButton Grid.Row="1"
+                             Margin="{StaticResource HeaderElementMargin}"
+                             Command="{Binding ApplyBacklightModeCommand}"
+                             CommandParameter="VolumeMasterPeak" Content="Volume master peak value sensitive" GroupName="1"
+                             IsChecked="{Binding SelectedBacklightJob, Mode=OneWay, Converter={StaticResource VolumeMasterPeakBacklightJobToCheckedConverter}}" />
+                <RadioButton Grid.Row="2"
+                             Margin="{StaticResource HeaderElementMargin}"
                              Command="{Binding ApplyBacklightModeCommand}"
                              CommandParameter="Rgb" Content="RGB backlight" GroupName="1"
-                             IsChecked="{Binding RgbDependentSelected, Mode=OneWay}" />
+                             IsChecked="{Binding SelectedBacklightJob, Mode=OneWay, Converter={StaticResource RgbBacklightJobToCheckedConverter}}" />
             </Grid>
         </mahapps:MetroHeader>
         <mahapps:MetroHeader Margin="{StaticResource MetroHeaderMargin}"

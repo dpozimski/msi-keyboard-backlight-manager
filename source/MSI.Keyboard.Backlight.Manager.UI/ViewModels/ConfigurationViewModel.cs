@@ -1,4 +1,5 @@
-﻿using MSI.Keyboard.Backlight.Manager.Settings;
+﻿using MSI.Keyboard.Backlight.Manager.Jobs.Models;
+using MSI.Keyboard.Backlight.Manager.Settings;
 using MSI.Keyboard.Backlight.Manager.UI.Services;
 using System;
 using System.Windows.Input;
@@ -11,7 +12,7 @@ namespace MSI.Keyboard.Backlight.Manager.UI.ViewModels
         private readonly IKeyboardBacklightService _keyboardBacklightService;
         private bool _deviceSupported;
         private bool _configurationChanged;
-        private BacklightConfiguration _backlightConfiguration;
+        private JobsConfiguration _backlightConfiguration;
 
         public bool DeviceSupported
         {
@@ -36,16 +37,6 @@ namespace MSI.Keyboard.Backlight.Manager.UI.ViewModels
             }
         }
 
-        public bool TaskbarColorDependentSelected
-        {
-            get => _backlightConfiguration.Mode == BacklightMode.TaskbarColorDependent;
-        }
-
-        public bool RgbDependentSelected
-        {
-            get => _backlightConfiguration.Mode == BacklightMode.Rgb;
-        }
-
         public bool ApplyConfigurationOnStartup
         {
             get => _frontendAppSettings.ApplyConfigurationOnStartup;
@@ -64,6 +55,8 @@ namespace MSI.Keyboard.Backlight.Manager.UI.ViewModels
             set => _frontendAppSettings.RunOnStartup = value;
         }
 
+        public BacklightJobType SelectedBacklightJob => _backlightConfiguration.Mode;
+
         public ICommand ApplyConfigurationCommand { get; }
 
         public ICommand ApplyBacklightModeCommand { get; }
@@ -75,7 +68,7 @@ namespace MSI.Keyboard.Backlight.Manager.UI.ViewModels
         {
             _frontendAppSettings = frontendAppSettings;
             _keyboardBacklightService = keyboardBacklightService;
-            _backlightConfiguration = new BacklightConfiguration();
+            _backlightConfiguration = new JobsConfiguration();
             _configurationChanged = true;
 
             ApplyConfigurationCommand = new RelayCommand<object>(ApplyConfiguration);
@@ -93,9 +86,11 @@ namespace MSI.Keyboard.Backlight.Manager.UI.ViewModels
 
         private void ApplyBacklightMode(string obj)
         {
-            var mode = (BacklightMode)Enum.Parse(typeof(BacklightMode), obj);
+            var mode = (BacklightJobType)Enum.Parse(typeof(BacklightJobType), obj);
 
             _backlightConfiguration.Mode = mode;
+
+            RaisePropertyChanged(nameof(SelectedBacklightJob));
 
             ConfigurationChanged = true;
         }

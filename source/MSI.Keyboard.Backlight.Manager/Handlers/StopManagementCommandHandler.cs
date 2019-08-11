@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MSI.Keyboard.Backlight.Manager.Handlers
 {
-    public class StopBacklightKeyboardManagementCommandHandler : IRequestHandler<StopBacklightKeyboardManagementCommand>
+    public class StopManagementCommandHandler : IRequestHandler<StopManagementCommand>
     {
-        public Task<Unit> Handle(StopBacklightKeyboardManagementCommand request, CancellationToken cancellationToken)
+        public Task<Unit> Handle(StopManagementCommand request, CancellationToken cancellationToken)
         {
             JobManager.StopAndBlock();
 

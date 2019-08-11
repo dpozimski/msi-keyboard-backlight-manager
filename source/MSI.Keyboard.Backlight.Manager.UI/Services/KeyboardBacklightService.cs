@@ -2,6 +2,7 @@
 using System.Windows;
 using MediatR;
 using MSI.Keyboard.Backlight.Manager.Commands;
+using MSI.Keyboard.Backlight.Manager.Jobs.Models;
 using MSI.Keyboard.Backlight.Manager.Queries;
 using MSI.Keyboard.Backlight.Manager.Settings;
 
@@ -21,7 +22,7 @@ namespace MSI.Keyboard.Backlight.Manager.UI.Services
 
         public async Task StopBacklightKeyboardManagement()
         {
-            await _mediator.Send(new StopBacklightKeyboardManagementCommand());
+            await _mediator.Send(new StopManagementCommand());
         }
 
         public async Task<bool> IsDeviceSupported()
@@ -29,12 +30,12 @@ namespace MSI.Keyboard.Backlight.Manager.UI.Services
             return await _mediator.Send(new CheckIfDeviceIsSupportedQuery());
         }
 
-        public async Task<BacklightConfiguration> GetConfiguration()
+        public async Task<JobsConfiguration> GetConfiguration()
         {
             return await _mediator.Send(new GetConfigurationQuery());
         }
 
-        public async Task ApplyConfiguration(BacklightConfiguration configuration)
+        public async Task ApplyConfiguration(JobsConfiguration configuration)
         {
             await _mediator.Send(new ApplyConfigurationCommand(configuration));
         }

@@ -11,7 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSI.Keyboard.Backlight.Mana
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSI.Keyboard.Backlight.Manager.Analytics", "source\MSI.Keyboard.Backlight.Manager.Analytics\MSI.Keyboard.Backlight.Manager.Analytics.csproj", "{B26460C9-32B6-44EE-B109-2DBA4D09B8DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSI.Keyboard.Backlight.Manager.Notifications", "source\MSI.Keyboard.Backlight.Manager.Notifications\MSI.Keyboard.Backlight.Manager.Notifications.csproj", "{DAEA3C2C-AEBA-4874-9CEA-38B0B5BDAE4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSI.Keyboard.Backlight.Manager.Notifications", "source\MSI.Keyboard.Backlight.Manager.Notifications\MSI.Keyboard.Backlight.Manager.Notifications.csproj", "{DAEA3C2C-AEBA-4874-9CEA-38B0B5BDAE4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSI.Keyboard.Backlight.Manager.Jobs", "source\MSI.Keyboard.Backlight.Manager.Jobs\MSI.Keyboard.Backlight.Manager.Jobs.csproj", "{7ED26BDA-961D-4A7A-A186-8CE77B729947}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSI.backlight.Keyboard.Manager.Jobs.Models", "source\MSI.backlight.Keyboard.Manager.Jobs.Models\MSI.backlight.Keyboard.Manager.Jobs.Models.csproj", "{FE94A6F0-7F55-4070-ADE8-FA866B5BCEEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{DAEA3C2C-AEBA-4874-9CEA-38B0B5BDAE4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAEA3C2C-AEBA-4874-9CEA-38B0B5BDAE4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAEA3C2C-AEBA-4874-9CEA-38B0B5BDAE4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ED26BDA-961D-4A7A-A186-8CE77B729947}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ED26BDA-961D-4A7A-A186-8CE77B729947}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ED26BDA-961D-4A7A-A186-8CE77B729947}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ED26BDA-961D-4A7A-A186-8CE77B729947}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE94A6F0-7F55-4070-ADE8-FA866B5BCEEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE94A6F0-7F55-4070-ADE8-FA866B5BCEEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE94A6F0-7F55-4070-ADE8-FA866B5BCEEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE94A6F0-7F55-4070-ADE8-FA866B5BCEEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

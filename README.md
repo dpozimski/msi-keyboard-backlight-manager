@@ -19,6 +19,10 @@ Feel free to send some feature requests!
 
 # Changelog
 
+v1.2
+
+* New backlight mode - Volume peak dependent
+
 v1.1
 
 * Cannot start multiple times
@@ -38,4 +42,4 @@ v1.0
 
 # Screens
 
-![Main](https://github.com/dpozimski/msi-keyboard-backlight-manager/raw/master/images/ss1.png)
+![Main](https://github.com/dpozimski/msi-keyboard-backlight-manager/raw/master/images/ss2.png)

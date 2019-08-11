@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using MSI.Keyboard.Backlight.Manager.Jobs.Models;
+using System.Threading.Tasks;
 
 namespace MSI.Keyboard.Backlight.Manager.UI.Services
 {
@@ -6,8 +7,8 @@ namespace MSI.Keyboard.Backlight.Manager.UI.Services
     {
         Task RestoreIfNeeded();
         Task<bool> IsDeviceSupported();
-        Task<BacklightConfiguration> GetConfiguration();
-        Task ApplyConfiguration(BacklightConfiguration configuration);
+        Task<JobsConfiguration> GetConfiguration();
+        Task ApplyConfiguration(JobsConfiguration configuration);
         Task StopBacklightKeyboardManagement();
     }
 }

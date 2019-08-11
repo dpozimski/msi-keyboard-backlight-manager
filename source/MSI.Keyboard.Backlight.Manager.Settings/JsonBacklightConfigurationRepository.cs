@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MSI.Keyboard.Backlight.Manager.Jobs.Models;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace MSI.Keyboard.Backlight.Manager.Settings
         }
 
 
-        public async Task<BacklightConfiguration> GetConfiguration()
+        public async Task<JobsConfiguration> GetConfiguration()
         {
             if(FileExists())
             {
@@ -29,7 +30,7 @@ namespace MSI.Keyboard.Backlight.Manager.Settings
             return GetDefaultConfiguration();
         }
 
-        public async Task SaveConfiguration(BacklightConfiguration configuration)
+        public async Task SaveConfiguration(JobsConfiguration configuration)
         {
             if (configuration is null)
                 throw new ArgumentNullException(nameof(configuration));
@@ -42,7 +43,7 @@ namespace MSI.Keyboard.Backlight.Manager.Settings
             return File.Exists(_filePath);
         }
 
-        private async Task SaveConfigurationToFile(BacklightConfiguration configuration)
+        private async Task SaveConfigurationToFile(JobsConfiguration configuration)
         {
             if(!FileExists())
             {
@@ -59,23 +60,22 @@ namespace MSI.Keyboard.Backlight.Manager.Settings
             }
         }
 
-        private async Task<BacklightConfiguration> GetConfigurationFromFile()
+        private async Task<JobsConfiguration> GetConfigurationFromFile()
         {
             using (var fs = File.OpenRead(_filePath))
             using (var sr = new StreamReader(fs))
             {
                 var content = await sr.ReadToEndAsync();
-                return JsonConvert.DeserializeObject<BacklightConfiguration>(content);
+                return JsonConvert.DeserializeObject<JobsConfiguration>(content);
             }
         }
 
-        private BacklightConfiguration GetDefaultConfiguration()
+        private JobsConfiguration GetDefaultConfiguration()
         {
-            return new BacklightConfiguration()
+            return new JobsConfiguration()
             {
-                Mode = BacklightMode.TaskbarColorDependent,
-                Intensity = 100,
-                RefreshInterval = TimeSpan.FromMilliseconds(100)
+                Mode = BacklightJobType.TaskbarColorDependent,
+                Intensity = 100
             };
         }
     }

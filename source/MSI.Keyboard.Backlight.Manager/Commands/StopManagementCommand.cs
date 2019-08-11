@@ -2,7 +2,7 @@
 
 namespace MSI.Keyboard.Backlight.Manager.Commands
 {
-    public class StopBacklightKeyboardManagementCommand : IRequest
+    public class StopManagementCommand : IRequest
     {
     }
 }
