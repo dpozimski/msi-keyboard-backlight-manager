@@ -10,9 +10,8 @@
                      xmlns:views="clr-namespace:MSI.Keyboard.Backlight.Manager.UI.Views"
                      Title="MSI Keyboard Backlight Manager" Width="800" Height="450"
                      GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
-                     Icon="Assets\icon.ico" NonActiveGlowBrush="#CDFF0000" ShowIconOnTitleBar="False"
-                     ShowInTaskbar="False" ShowTitleBar="True" StateChanged="MetroWindow_StateChanged"
-                     WindowStartupLocation="CenterScreen" WindowState="Minimized" mc:Ignorable="d">
+                     Icon="Assets\icon.ico" NonActiveGlowBrush="#CDFF0000" ShowIconOnTitleBar="False" ShowTitleBar="True"
+                     StateChanged="MetroWindow_StateChanged" WindowStartupLocation="CenterScreen" mc:Ignorable="d">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">

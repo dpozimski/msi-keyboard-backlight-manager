@@ -58,12 +58,16 @@ namespace MSI.Keyboard.Backlight.Manager.UI.Services
 
         private void RestoreFrontendConfiguration()
         {
-            if (_frontendAppSettings.StartMinimized)
-                return;
-
             var window = Application.Current.MainWindow as MainWindow;
 
-            window.RestoreFromTray();
+            if (_frontendAppSettings.StartMinimized)
+            {
+                window.GoToTray();
+            }
+            else
+            {
+                window.RestoreFromTray();
+            }
         }
     }
 }

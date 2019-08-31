@@ -23,6 +23,11 @@ namespace MSI.Keyboard.Backlight.Manager.UI
             WindowState = WindowState.Normal;
         }
 
+        public void GoToTray()
+        {
+            WindowState = WindowState.Minimized;
+        }
+
         private void MyNotifyIcon_TrayMouseDoubleClick(object sender, RoutedEventArgs e)
         {
             RestoreFromTray();
