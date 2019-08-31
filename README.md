@@ -34,6 +34,16 @@ v1.0
 
 * Initial version
 
+# Dependencies
+
+* [MSI Keyboard Backlight Library](https://github.com/dpozimski/msi-keyboard-backlight)
+* [MahApps](https://github.com/MahApps/MahApps.Metro)
+* [wpf-notifyicon](https://github.com/hardcodet/wpf-notifyicon)
+* [ToastNotifications](https://github.com/rafallopatka/ToastNotifications)
+* [AutoFac](https://autofac.org/)
+* [Application Insights](https://dev.applicationinsights.io/)
+* [MediatR](https://github.com/jbogard/MediatR)
+
 # Installation
 
 * Switch to release tab 
