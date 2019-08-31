@@ -19,10 +19,10 @@
     <ROW Property="ARPURLINFOABOUT" Value="https://github.com/dpozimski/msi-keyboard-backlight-manager"/>
     <ROW Property="CTRLS" Value="2"/>
     <ROW Property="Manufacturer" Value="SoftPower"/>
-    <ROW Property="ProductCode" Value="1033:{221B494C-375B-43E5-94DB-3A4BC8C76693} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{56A085B2-1EC6-4A7B-A44E-B32B3506F59F} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="MSI Keyboard Backlight Manager"/>
-    <ROW Property="ProductVersion" Value="1.2.2.0" Type="32" TargetFile="BacklightManager.exe"/>
+    <ROW Property="ProductVersion" Value="1.2.3.0" Type="32" TargetFile="BacklightManager.exe"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{2B67365F-BCE3-4814-8A6F-E8A77531EF72}"/>
     <ROW Property="WindowsType9X" MultiBuildValue="DefaultBuild:Windows 9x/ME" ValueLocId="-"/>
