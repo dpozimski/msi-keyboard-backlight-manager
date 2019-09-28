@@ -10,7 +10,20 @@ namespace MSI.Keyboard.Backlight.Manager.Jobs.DeviceMasterPeak
 {
     public class VolumeMasterPeakBacklightJob : BaseBacklightJob
     {
+        private static Lazy<MMDevice> MMDevice;
+
         public override TimeSpan RefreshInterval => TimeSpan.FromMilliseconds(5);
+
+        static VolumeMasterPeakBacklightJob()
+        {
+            MMDevice = new Lazy<MMDevice>(() =>
+            {
+                var deviceEnumeration = new MMDeviceEnumerator();
+                var devices = deviceEnumeration.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
+                var device = devices.FirstOrDefault();
+                return device;
+            }, true);
+        }
 
         public VolumeMasterPeakBacklightJob(
             IKeyboardService keyboardService, 
@@ -22,10 +35,7 @@ namespace MSI.Keyboard.Backlight.Manager.Jobs.DeviceMasterPeak
 
         protected override BacklightConfiguration Configure(IBacklightConfigurationBuilder builder)
         {
-            var deviceEnumeration = new MMDeviceEnumerator();
-            var devices = deviceEnumeration.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
-            var device = devices.FirstOrDefault();
-            var mpv = device.AudioMeterInformation.MasterPeakValue;
+            var mpv = MMDevice.Value.AudioMeterInformation.MasterPeakValue;
 
             mpv = NormalizeMpv(mpv);
             var color = GetColor(mpv);
@@ -70,8 +80,6 @@ namespace MSI.Keyboard.Backlight.Manager.Jobs.DeviceMasterPeak
             }
 
             var colorSumValue = (int)Math.Round(mpv * (255 + 255 + 255) * 1.15 / 100, 0);
-
-            Debug.WriteLine(colorSumValue);
 
             var rgb = new int[3];
 
