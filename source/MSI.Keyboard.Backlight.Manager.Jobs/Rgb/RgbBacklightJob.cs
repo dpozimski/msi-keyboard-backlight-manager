@@ -14,6 +14,8 @@ namespace MSI.Keyboard.Backlight.Manager.Jobs.RgbBacklight
         {
         }
 
+        public override bool CanExecute() => true;
+
         protected override BacklightConfiguration Configure(IBacklightConfigurationBuilder builder)
         {
             return builder

@@ -17,7 +17,7 @@
     <Description>The WPF .NET Core App which enhance your user experience of using your MSI Notebook!</Description>
     <ApplicationIcon>Assets\icon.ico</ApplicationIcon>
     <AssemblyName>BacklightManager</AssemblyName>
-    <Version>1.2.4</Version>
+    <Version>1.3.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

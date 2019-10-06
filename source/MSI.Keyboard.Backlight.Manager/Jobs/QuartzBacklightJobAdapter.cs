@@ -13,7 +13,10 @@ namespace MSI.Keyboard.Backlight.Manager.Jobs
 
         public void Execute()
         {
-            _backlightJob.Execute().Wait();
+            var canExecute = _backlightJob.CanExecute();
+
+            if (canExecute)
+                _backlightJob.Execute().Wait();
         }
     }
 }

@@ -7,6 +7,7 @@ namespace MSI.Keyboard.Backlight.Manager.Jobs
     {
         int Intensity { get; set; }
         TimeSpan RefreshInterval { get; }
+        bool CanExecute();
         Task Execute();
     }
 }

@@ -7,6 +7,8 @@ namespace MSI.Keyboard.Backlight.Manager.Jobs.TaskbarDependentBacklight
 {
     public class TaskbarDependentBacklightJob : BaseBacklightJob
     {
+        private Color? _taskbarColor;
+
         public override TimeSpan RefreshInterval => TimeSpan.FromMilliseconds(100);
 
         public TaskbarDependentBacklightJob(IKeyboardService keyboardService, IBacklightConfigurationBuilder backlightConfigurationBuilder)
@@ -14,12 +16,22 @@ namespace MSI.Keyboard.Backlight.Manager.Jobs.TaskbarDependentBacklight
         {
         }
 
+        public override bool CanExecute()
+        {
+            var newTaskbarColor = GetTaskbarColor();
+
+            if (_taskbarColor.HasValue && newTaskbarColor == _taskbarColor)
+                return false;
+
+            _taskbarColor = newTaskbarColor;
+
+            return true;
+        }
+
         protected override BacklightConfiguration Configure(IBacklightConfigurationBuilder builder)
         {
-            var taskbarColor = GetTaskbarColor();
-
             return builder
-                .ForAllRegions(taskbarColor, Intensity)
+                .ForAllRegions(_taskbarColor.Value, Intensity)
                 .Build();
         }
 

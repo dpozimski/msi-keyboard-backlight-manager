@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using MSI.Keyboard.Backlight.Configuration;
@@ -10,20 +9,9 @@ namespace MSI.Keyboard.Backlight.Manager.Jobs.DeviceMasterPeak
 {
     public class VolumeMasterPeakBacklightJob : BaseBacklightJob
     {
-        private static Lazy<MMDevice> MMDevice;
+        private float? _mpv;
 
         public override TimeSpan RefreshInterval => TimeSpan.FromMilliseconds(5);
-
-        static VolumeMasterPeakBacklightJob()
-        {
-            MMDevice = new Lazy<MMDevice>(() =>
-            {
-                var deviceEnumeration = new MMDeviceEnumerator();
-                var devices = deviceEnumeration.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
-                var device = devices.FirstOrDefault();
-                return device;
-            }, true);
-        }
 
         public VolumeMasterPeakBacklightJob(
             IKeyboardService keyboardService, 
@@ -33,15 +21,48 @@ namespace MSI.Keyboard.Backlight.Manager.Jobs.DeviceMasterPeak
             
         }
 
+        public override bool CanExecute()
+        {
+            var mmDevice = GetMMDevice();
+
+            var newMpv = GetMpvFromDevice(mmDevice);
+
+            if (_mpv.HasValue && newMpv == _mpv)
+                return false;
+
+            _mpv = newMpv;
+
+            return true;
+        }
+
         protected override BacklightConfiguration Configure(IBacklightConfigurationBuilder builder)
         {
-            var mpv = MMDevice.Value.AudioMeterInformation.MasterPeakValue;
+            var normalizedMpv = NormalizeMpv(_mpv.Value);
 
-            mpv = NormalizeMpv(mpv);
-            var color = GetColor(mpv);
-            var intensity = GetIntensity(mpv);
+            var color = GetColor(normalizedMpv);
+            var intensity = GetIntensity(normalizedMpv);
 
             return builder.ForAllRegions(color, intensity).Build();
+        }
+
+        private MMDevice GetMMDevice()
+        {
+            var deviceEnumeration = new MMDeviceEnumerator();
+            var devices = deviceEnumeration.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active);
+            var device = devices.Where(d => d.AudioMeterInformation.MasterPeakValue > 0).FirstOrDefault() ??
+                devices.FirstOrDefault();
+
+            return device;
+        }
+
+        private float GetMpvFromDevice(MMDevice mmDevice)
+        {
+            if (mmDevice is null)
+            {
+                return 100f;
+            }
+
+            return mmDevice.AudioMeterInformation.MasterPeakValue;
         }
 
         private float NormalizeMpv(float mpv)

@@ -19,6 +19,10 @@ Feel free to send some feature requests!
 
 # Changelog
 
+v1.3
+
+* Multi sound output devices support for Volume peak dependent mode
+
 v1.2
 
 * New backlight mode - Volume peak dependent

@@ -20,6 +20,8 @@ namespace MSI.Keyboard.Backlight.Manager.Jobs
             _backlightConfigurationBuilder = backlightConfigurationBuilder;
         }
 
+        public abstract bool CanExecute();
+
         public async Task Execute()
         {
             var configuration = Configure(_backlightConfigurationBuilder);
